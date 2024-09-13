@@ -1,0 +1,240 @@
+.collab-icon {
+  height: 39px;
+  width: 40px;
+}
+
+.c-header {
+
+  background: transparent;
+  color: #fff;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 10px 15px;
+}
+
+.c-name {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #f0f0f0;
+  margin-left: 10px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  margin-right: 15px;
+  /* Ensure nav links are 15px from the right */
+}
+
+.nav-links li {
+  margin-left: 20px;
+  /* Space between the links */
+}
+
+.nav-links a {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #e0e0e0;
+  /* Light gray to match the overall design */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+  /* Change to full white on hover */
+}
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Ensure body and html take full height */
+html, body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure full viewport height */
+}
+
+main {
+  flex-grow: 1; /* Allow main content to grow and push footer down */
+}
+
+/* Full Screen Hero Section */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(360deg, #504d5c, #154f90);
+  color: white;
+  padding: 100px 0;
+}
+
+/* Hero Section Content */
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  font-family: 'Roboto', sans-serif;
+  color: #e0e0e0;
+}
+
+.hero .cta {
+  background-color: #0056b3;
+  padding: 15px 30px;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero .cta:hover {
+  background-color: #004080;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Header */
+.c-header {
+  background: transparent;
+  color: #fff;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 10px 15px;
+}
+
+.collab-icon {
+  height: 39px;
+  width: 40px;
+}
+
+.c-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f0f0f0;
+  margin-left: 10px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  margin-right: 15px;
+}
+
+.nav-links li {
+  margin-left: 20px;
+}
+
+.nav-links a {
+  font-size: 16px;
+  font-weight: 500;
+  color: #e0e0e0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+}
+
+/* How It Works Section */
+.how-it-works {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equally spaced columns for horizontal layout */
+  gap: 20px; /* Space between cards */
+  padding: 50px 20px;
+  margin: 50px 0;
+}
+
+.step {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.step h2 {
+  font-size: 2rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  color: #f0f0f0;
+  margin-bottom: 10px;
+}
+
+.step p {
+  font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;
+  color: #e0e0e0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .how-it-works {
+    grid-template-columns: 1fr; /* Stack steps vertically on smaller screens */
+  }
+}
+
+/* Footer */
+.footer {
+  background: #154f90;
+  padding: 40px 0;
+  text-align: center;
+  color: #e0e0e0;
+  width: 100%;
+  margin-top: auto; /* Ensure footer stays at the bottom */
+}
+
+.footer p {
+  font-size: 1.2rem;
+}
