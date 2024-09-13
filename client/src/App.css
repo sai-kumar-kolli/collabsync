@@ -1,63 +1,3 @@
-.collab-icon {
-  height: 39px;
-  width: 40px;
-}
-
-.c-header {
-
-  background: transparent;
-  color: #fff;
-  position: fixed;
-  width: 100%;
-  z-index: 10;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  padding: 10px 10px 10px 15px;
-}
-
-.c-name {
-  font-family: 'Roboto', sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-  color: #f0f0f0;
-  margin-left: 10px;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  margin-right: 15px;
-  /* Ensure nav links are 15px from the right */
-}
-
-.nav-links li {
-  margin-left: 20px;
-  /* Space between the links */
-}
-
-.nav-links a {
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  color: #e0e0e0;
-  /* Light gray to match the overall design */
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #ffffff;
-  /* Change to full white on hover */
-}
 /* Reset default margin and padding */
 * {
   margin: 0;
@@ -80,50 +20,6 @@ html, body {
 
 main {
   flex-grow: 1; /* Allow main content to grow and push footer down */
-}
-
-/* Full Screen Hero Section */
-.hero {
-  min-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
-  padding: 100px 0;
-}
-
-/* Hero Section Content */
-.hero h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: bold;
-  color: #f0f0f0;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  font-family: 'Roboto', sans-serif;
-  color: #e0e0e0;
-}
-
-.hero .cta {
-  background-color: #0056b3;
-  padding: 15px 30px;
-  color: white;
-  border-radius: 5px;
-  text-decoration: none;
-  font-size: 1.2rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hero .cta:hover {
-  background-color: #004080;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Header */
@@ -181,13 +77,54 @@ nav {
   color: #ffffff;
 }
 
+/* Full Screen Hero Section */
+.hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 100px 0;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #e0e0e0;
+}
+
+.hero .cta {
+  background-color: #0056b3;
+  padding: 15px 30px;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero .cta:hover {
+  background-color: #004080;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
 /* How It Works Section */
 .how-it-works {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 equally spaced columns */
   gap: 15px; /* Reduce space between cards */
   padding: 30px 20px; /* Reduce padding */
-  margin:  auto; /* Center the section horizontally */
+  margin: auto; /* Center the section horizontally */
   max-width: 1000px; /* Reduce the maximum width for a smaller layout */
   width: 100%; /* Ensure the section fits within the viewport */
 }
@@ -215,7 +152,6 @@ nav {
 
 .step h2 {
   font-size: 1.8rem; /* Slightly reduce font size */
-  font-family: 'Roboto', sans-serif;
   font-weight: bold;
   color: #f0f0f0;
   margin-bottom: 8px; /* Reduce margin between heading and paragraph */
@@ -223,7 +159,6 @@ nav {
 
 .step p {
   font-size: 1.1rem; /* Slightly reduce font size */
-  font-family: 'Roboto', sans-serif;
   color: #e0e0e0;
 }
 
@@ -234,8 +169,6 @@ nav {
     max-width: 90%; /* Ensure the grid doesn't stretch too much on small screens */
   }
 }
-
-
 
 /* Footer */
 .footer {
