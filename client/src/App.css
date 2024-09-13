@@ -75,6 +75,7 @@ html, body {
   display: flex;
   flex-direction: column;
   min-height: 100vh; /* Ensure full viewport height */
+  background: linear-gradient(360deg, #504d5c, #154f90);
 }
 
 main {
@@ -83,13 +84,12 @@ main {
 
 /* Full Screen Hero Section */
 .hero {
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: linear-gradient(360deg, #504d5c, #154f90);
   color: white;
   padding: 100px 0;
 }
@@ -184,36 +184,45 @@ nav {
 /* How It Works Section */
 .how-it-works {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 equally spaced columns for horizontal layout */
-  gap: 20px; /* Space between cards */
-  padding: 50px 20px;
-  margin: 50px 0;
+  grid-template-columns: repeat(3, 1fr); /* 3 equally spaced columns */
+  gap: 15px; /* Reduce space between cards */
+  padding: 30px 20px; /* Reduce padding */
+  margin:  auto; /* Center the section horizontally */
+  max-width: 1000px; /* Reduce the maximum width for a smaller layout */
+  width: 100%; /* Ensure the section fits within the viewport */
 }
 
 .step {
   background-color: rgba(255, 255, 255, 0.1);
-  padding: 20px;
+  padding: 15px; /* Reduce padding inside the card */
   border-radius: 8px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly reduce shadow size */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  /* Ensure equal size for all cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px; /* Reduce minimum height for smaller cards */
 }
 
 .step:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Slightly smaller hover shadow */
 }
 
 .step h2 {
-  font-size: 2rem;
+  font-size: 1.8rem; /* Slightly reduce font size */
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
   color: #f0f0f0;
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Reduce margin between heading and paragraph */
 }
 
 .step p {
-  font-size: 1.2rem;
+  font-size: 1.1rem; /* Slightly reduce font size */
   font-family: 'Roboto', sans-serif;
   color: #e0e0e0;
 }
@@ -222,8 +231,11 @@ nav {
 @media (max-width: 768px) {
   .how-it-works {
     grid-template-columns: 1fr; /* Stack steps vertically on smaller screens */
+    max-width: 90%; /* Ensure the grid doesn't stretch too much on small screens */
   }
 }
+
+
 
 /* Footer */
 .footer {
