@@ -1,54 +1,21 @@
 import "./App.css";
-import icon from "../src/assets/images/icon.jpeg";
+import Header from "./components/header/header";
+import EditorLanding from "./features/editorpage/editorLanding";
+import MainSection from "./features/landingpage/mainsection";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation(); // Get the current route
+
+  const headerClass =
+    location.pathname === "/editor" ? "App editor" : "App";
   return (
-    <div className="App">
-      <header className="c-header">
-        <nav>
-          <div className="logo">
-            <img className="collab-icon" src={icon} alt="collabsync" />
-            <div className="c-name">Collab Sync</div>
-          </div>
-          <ul className="nav-links">
-            <li>
-              <a href="#">Sign In</a>
-            </li>
-            <li>
-              <a href="#">Start Sharing</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-
-      <main>
-        <section className="hero">
-          <h1>Collaborate in Real-Time</h1>
-          <p>Share code instantly with others for collaborative editing.</p>
-          <a href="#" className="cta">
-            Start Sharing
-          </a>
-        </section>
-
-        <section className="how-it-works">
-          <div className="step">
-            <h2>Step 1</h2>
-            <p>Start a session</p>
-          </div>
-          <div className="step">
-            <h2>Step 2</h2>
-            <p>Invite others</p>
-          </div>
-          <div className="step">
-            <h2>Step 3</h2>
-            <p>Collaborate in real time</p>
-          </div>
-        </section>
-      </main>
-
-      <footer className="footer">
-        <p>&copy; 2024 Your Company</p>
-      </footer>
+    <div className={headerClass}>
+      <Header />
+      <Routes>
+        <Route path="/" element={<MainSection />} />
+        <Route path="/editor" element={<EditorLanding />} />
+      </Routes>
     </div>
   );
 }
