@@ -108,18 +108,33 @@ nav {
 
 .hero .cta {
   background-color: #0056b3;
-  padding: 15px 30px;
+  /* Same color as the previous link */
   color: white;
+  padding: 15px 30px;
+  border: none;
   border-radius: 5px;
-  text-decoration: none;
   font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+  /* Ensure no underline */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .hero .cta:hover {
   background-color: #004080;
+  /* Hover effect to match the link */
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero .cta:focus {
+  outline: none;
+  /* Remove focus outline */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  /* Maintain shadow on focus */
 }
 
 /* How It Works Section */
@@ -219,8 +234,8 @@ nav {
 .editor-container {
   margin-top: 60px;
   /* Offset by the header height */
-  height: calc(100vh - 60px);
-  /* Full height minus the header height */
+  height: 80vh
+    /* Full height minus the header height */
 }
 
 /* Default header background (e.g., for landing page) */
@@ -240,4 +255,23 @@ nav {
 .editor-header {
   background-color: #1f1f1f;
   /* Darker color for editor page */
+}
+
+.session-info {
+  font-size: 16px;
+  color: white;
+}
+
+.extend-session-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.extend-session-btn:hover {
+  background-color: #0056b3;
 }

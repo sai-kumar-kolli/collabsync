@@ -1,13 +1,11 @@
-import React from 'react'
+import React from 'react';
 import icon from "../../../src/assets/images/icon.jpeg";
 import { Link, useLocation } from 'react-router-dom';
 
-
-const Header = (props) => {
-    const location = useLocation(); // Get the current route
-
-    const headerClass = location.pathname === "/editor" ? "c-header editor-header" : "c-header default-header";
-
+const Header = () => {
+    const location = useLocation();
+    const oneditor = location.pathname.includes("/editor");
+    const headerClass = oneditor ? "c-header editor-header" : "c-header default-header";
 
     return (
         <>
@@ -22,16 +20,14 @@ const Header = (props) => {
                         </div>
                     </div>
                     <ul className="nav-links">
-                        <li>
-                            <a href="#">Sign In</a>
-                        </li>
-                        <li>
-                            <a href="#">Start Sharing</a>
-                        </li>
+                        <li><a href="#">Sign In</a></li>
+                        <li><a href="#">Start Sharing</a></li>
                     </ul>
+
                 </nav>
             </header>
         </>
-    )
+    );
 }
+
 export default Header;

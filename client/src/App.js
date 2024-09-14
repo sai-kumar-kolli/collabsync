@@ -7,14 +7,15 @@ import { Route, Routes, useLocation } from "react-router-dom";
 function App() {
   const location = useLocation(); // Get the current route
 
-  const headerClass =
-    location.pathname === "/editor" ? "App editor" : "App";
+  const headerClass = location.pathname.includes("/editor")
+    ? "App editor"
+    : "App";
   return (
     <div className={headerClass}>
       <Header />
       <Routes>
         <Route path="/" element={<MainSection />} />
-        <Route path="/editor" element={<EditorLanding />} />
+        <Route path="/editor/:sessionId" element={<EditorLanding />} />
       </Routes>
     </div>
   );
