@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { socket } from '../../../utils/socket'; // Import the socket
 import { getDocument } from '../../API/getDocument';
 import { addSessionData, removeSessionData } from '../../Slices/editorSlice';
 
-const EditorLanding = () => {
+const EditorLanding = (props) => {
   const { sessionId } = useParams(); // Get editor ID from URL
   const dispatch = useDispatch();
 
-  const initialCode = useSelector((state) => state.editor.code); // Redux code state
-  const [code, setCode] = useState(initialCode?.content || ""); // State for editor code
+  // const initialCode = useSelector((state) => state.editor.code); // Redux code state
+  const [code, setCode] = useState(""); // State for editor code
 
   useEffect(() => {
     return () => {
       dispatch(addSessionData({}))
     }
   }, [])
+
+  useEffect(() => {
+    if (props.code) {
+      setCode(props.code.content);
+    }
+  }, [props.code])
+
 
   useEffect(() => {
     if (sessionId && !socket.connected) {
@@ -80,4 +87,18 @@ const EditorLanding = () => {
   );
 };
 
-export default EditorLanding;
+//Map Redux state to component props
+const mapStateToProps = (state) => ({
+  sessionData: state.editor.sessionData, // Session data from Redux store
+  code: state.editor.code, // Document code from Redux store
+});
+
+// Map Redux actions to component props
+const mapDispatchToProps = {
+  getDocument,
+  addSessionData,
+  removeSessionData,
+};
+
+// Connect the component to Redux
+export default connect(mapStateToProps, mapDispatchToProps)(EditorLanding);

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getDocument } from "../API/getDocument";
 
 const initialState = {
-  code: [],
+  code: {},
   isLoading: false,
   error: "",
   sessionData: {}, // Store session data
@@ -23,7 +23,7 @@ const editorSlice = createSlice({
     removeSessionData: (state, action) => {
       state.isExpired = false;
       state.sessionData = {};
-      state.code = [];
+      state.code = {};
     },
   },
   extraReducers: (builder) => {

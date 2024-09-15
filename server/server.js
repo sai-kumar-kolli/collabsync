@@ -40,6 +40,9 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 
+const debounceTimers = {}; // Store timers for each room
+const documentBuffers = {}; // Store code changes for each room
+
 // WebSocket Setup
 const io = socketIO(server, {
   cors: {
@@ -106,22 +109,49 @@ io.on("connection", (socket) => {
   });
 
   // Handle real-time code changes
-  socket.on("codeChange", async ({ roomId, code }) => {
+  // Handle real-time code changes
+  socket.on("codeChange", ({ roomId, code }) => {
     try {
       // Broadcast the code change to other users in the same room
       socket.broadcast.to(roomId).emit("receiveCode", code);
 
-      // Save the code to the database with a debounce-like mechanism (save every 5 seconds)
-      const document = await Document.findOne({ documentId: roomId });
-      if (document) {
-        document.content = code;
-        await document.save();
-        console.log(`Document ${roomId} saved`);
+      // Store the code in memory (document buffer) for this room
+      if (!documentBuffers[roomId]) {
+        documentBuffers[roomId] = {
+          latestCode: code,
+          lastUpdate: Date.now(),
+        };
       } else {
-        console.log(`Document ${roomId} not found during code change`);
+        documentBuffers[roomId].latestCode = code;
+        documentBuffers[roomId].lastUpdate = Date.now();
       }
+
+      // Clear any existing debounce timer for this room
+      if (debounceTimers[roomId]) {
+        clearTimeout(debounceTimers[roomId]);
+      }
+
+      // Set a new debounce timer (e.g., 5 seconds)
+      debounceTimers[roomId] = setTimeout(async () => {
+        try {
+          const document = await Document.findOne({ documentId: roomId });
+          if (document) {
+            document.content = documentBuffers[roomId].latestCode;
+            await document.save();
+            console.log(`Document ${roomId} saved after debounce`);
+          } else {
+            console.log(`Document ${roomId} not found during code change`);
+          }
+
+          // Cleanup memory for the room after saving
+          delete documentBuffers[roomId];
+          delete debounceTimers[roomId];
+        } catch (error) {
+          console.error(`Error saving document for room ${roomId}:`, error);
+        }
+      }, 5000); // Wait 5 seconds after the last change before saving
     } catch (error) {
-      console.error(`Error saving document for room ${roomId}:`, error);
+      console.error(`Error processing codeChange for room ${roomId}:`, error);
     }
   });
   // Handle session expiry and document cleanup
