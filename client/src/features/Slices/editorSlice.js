@@ -6,6 +6,7 @@ const initialState = {
   isLoading: false,
   error: "",
   sessionData: {}, // Store session data
+  isExpired: false,
 };
 
 const editorSlice = createSlice({
@@ -15,6 +16,14 @@ const editorSlice = createSlice({
     addSessionData: (state, action) => {
       console.log("acgtion", action);
       state.sessionData = action.payload; // Update session data
+    },
+    updateSessionExpiry: (state, action) => {
+      state.isExpired = true;
+    },
+    removeSessionData: (state, action) => {
+      state.isExpired = false;
+      state.sessionData = {};
+      state.code = [];
     },
   },
   extraReducers: (builder) => {
@@ -32,5 +41,5 @@ const editorSlice = createSlice({
   },
 });
 
-export const { addSessionData } = editorSlice.actions;
+export const { addSessionData, removeSessionData } = editorSlice.actions;
 export default editorSlice.reducer;

@@ -4,16 +4,20 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { socket } from '../../../utils/socket'; // Import the socket
 import { getDocument } from '../../API/getDocument';
-import { addSessionData } from '../../Slices/editorSlice';
+import { addSessionData, removeSessionData } from '../../Slices/editorSlice';
 
 const EditorLanding = () => {
   const { sessionId } = useParams(); // Get editor ID from URL
   const dispatch = useDispatch();
-  
+
   const initialCode = useSelector((state) => state.editor.code); // Redux code state
   const [code, setCode] = useState(initialCode?.content || ""); // State for editor code
-  const [isSessionExpired, setIsSessionExpired] = useState(false);
-  // const sessionData = useSelector((state) => state.editor.sessionData); // Redux session data
+
+  useEffect(() => {
+    return () => {
+      dispatch(addSessionData({}))
+    }
+  }, [])
 
   useEffect(() => {
     if (sessionId && !socket.connected) {
@@ -22,12 +26,6 @@ const EditorLanding = () => {
 
       // Join the room based on editor ID
       socket.emit("joinRoom", sessionId);
-
-      // Listen for session expiration
-      socket.on("sessionExpired", (data) => {
-        setIsSessionExpired(true);
-        alert(data.message); // Notify the user when the session expires
-      });
 
       // Listen for session info and update Redux
       socket.on("sessionInfo", (data) => {
@@ -43,7 +41,7 @@ const EditorLanding = () => {
       // Cleanup WebSocket listeners and connection when component unmounts
       return () => {
         socket.disconnect(); // Disconnect WebSocket
-        socket.off("sessionExpired");
+        // socket.off("sessionExpired");
         socket.off("sessionInfo");
         socket.off("receiveCode");
       };
@@ -53,6 +51,9 @@ const EditorLanding = () => {
   useEffect(() => {
     if (sessionId) {
       dispatch(getDocument(sessionId)); // Fetch document and update Redux store
+    }
+    return () => {
+      dispatch(removeSessionData(sessionId));
     }
   }, [sessionId, dispatch]); // Only depend on sessionId
 

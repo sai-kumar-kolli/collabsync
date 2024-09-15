@@ -18,9 +18,6 @@ app.use(
   })
 );
 
-// In-memory session store
-const sessions = {};
-
 app.use(express.json()); // To handle JSON request bodies
 
 // Connect MongoDB with Mongoose
@@ -56,88 +53,91 @@ const io = socketIO(server, {
 io.on("connection", (socket) => {
   console.log("New user connected");
 
-  socket.on("joinRoom", (roomId) => {
-    if (!sessions[roomId]) {
-      sessions[roomId] = {
-        startTime: Date.now(),
-        duration: 3600000, // 1 hour session duration
-        extended: false,
-        lastSaved: Date.now(), // Initialize lastSaved when the room is created
-      };
-      console.log(`Session ${roomId} started`);
+  // Join room when user connects
+  socket.on("joinRoom", async (roomId) => {
+    try {
+      // Join the room
+      socket.join(roomId);
+      console.log(`User joined room: ${roomId}`);
+
+      // Check if the document exists and emit session info
+      const document = await Document.findOne({ documentId: roomId });
+      if (document) {
+        socket.emit("sessionInfo", {
+          startTime: document.createdAt,
+          duration: 3600000, // 1 hour
+          sessionId: document.documentId,
+        });
+      } else {
+        console.log(`No document found for roomId: ${roomId}`);
+      }
+    } catch (error) {
+      console.error(`Error joining room ${roomId}:`, error);
     }
-    socket.join(roomId);
-
-    // Emit session info to the user
-    socket.emit("sessionInfo", sessions[roomId]);
-
-    console.log(`User joined room: ${roomId}`);
   });
 
-  socket.on("extendSession", (roomId) => {
-    const session = sessions[roomId];
-    if (session && !session.extended) {
-      session.duration += 3600000; // Add 1 hour
-      session.extended = true;
-      console.log(`Session ${roomId} extended by 1 hour`);
-      socket.emit("sessionExtended", { message: "Session extended by 1 hour" });
-    } else {
+  // Extend session duration (reset TTL)
+  socket.on("extendSession", async (roomId) => {
+    try {
+      const document = await Document.findOne({ documentId: roomId });
+      console.log("im in seesion expiry place", document, roomId);
+      if (document) {
+        // Reset TTL by updating the createdAt field to current time
+        let time = new Date();
+        document.createdAt = time;
+        await document.save();
+        socket.emit("sessionExtended", {
+          message: "Session extended by 1 hour",
+          sessionId: roomId,
+          createdAt: time,
+        });
+        console.log(`Session for room ${roomId} extended by 1 hour`);
+      } else {
+        socket.emit("sessionExtensionFailed", {
+          message: "Document not found, cannot extend session",
+        });
+      }
+    } catch (error) {
+      console.error(`Error extending session for room ${roomId}:`, error);
       socket.emit("sessionExtensionFailed", {
-        message: "Session cannot be extended",
+        message: "Session extension failed due to server error",
       });
     }
   });
 
+  // Handle real-time code changes
   socket.on("codeChange", async ({ roomId, code }) => {
-    console.log("code change", code);
-    socket.broadcast.to(roomId).emit("receiveCode", code);
+    try {
+      // Broadcast the code change to other users in the same room
+      socket.broadcast.to(roomId).emit("receiveCode", code);
 
-    // Ensure that the session for the room exists before trying to access lastSaved
-    if (sessions[roomId]) {
-      // Debounce save (save after 5 seconds of inactivity)
-      if (Date.now() - sessions[roomId].lastSaved > 5000) {
-        sessions[roomId].lastSaved = Date.now();
-
-        const document = await Document.findOne({ documentId: roomId });
-        if (document) {
-          await Document.findOneAndUpdate(
-            { documentId: roomId },
-            { content: code }
-          );
-          console.log(`Document ${roomId} saved`);
-        } else {
-          console.log(`Document ${roomId} not found, creating new document.`);
-          const newDocument = new Document({ documentId: roomId, content: code });
-          await newDocument.save();
-          console.log(`Document ${roomId} created and saved.`);
-        }
+      // Save the code to the database with a debounce-like mechanism (save every 5 seconds)
+      const document = await Document.findOne({ documentId: roomId });
+      if (document) {
+        document.content = code;
+        await document.save();
+        console.log(`Document ${roomId} saved`);
+      } else {
+        console.log(`Document ${roomId} not found during code change`);
       }
-    } else {
-      console.error(`Session for room ${roomId} does not exist.`);
+    } catch (error) {
+      console.error(`Error saving document for room ${roomId}:`, error);
     }
   });
+  // Handle session expiry and document cleanup
+  socket.on("sessionExpiry", async (roomId) => {
+    console.log(`Session ${roomId} expired. Cleaning up...`);
 
+    // Delete the document and session data
+    await Document.findOneAndDelete({ documentId: roomId });
+    socket.emit("sessionCleanup", { message: "Session and document deleted." });
+  });
+
+  // Handle disconnection
   socket.on("disconnect", () => {
     console.log("User disconnected");
   });
 });
-
-// Periodically check for session expiration
-setInterval(async () => {
-  Object.keys(sessions).forEach(async (sessionId) => {
-    const session = sessions[sessionId];
-    if (Date.now() - session.startTime > session.duration) {
-      io.to(sessionId).emit("sessionExpired", {
-        message: "Session has expired",
-      });
-
-      await Document.findOneAndDelete({ documentId: sessionId });
-      console.log(`Document ${sessionId} deleted after session expired`);
-
-      delete sessions[sessionId];
-    }
-  });
-}, 60000); // Check every 60 seconds
 
 // 404 Middleware for Unmatched Routes
 app.use((req, res, next) => {
