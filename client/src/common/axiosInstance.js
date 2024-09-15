@@ -1,10 +1,9 @@
 // axiosInstance.js
 import axios from "axios";
-import { apiURL } from "./constant";
-
+console.log(process.env.PUBLIC_URL)
 // Create an axios instance with default settings
 const axiosInstance = axios.create({
-  baseURL: apiURL, // Set the base URL of your API
+  baseURL: process.env.REACT_APP_BASE_URL, // Set the base URL of your API
   timeout: 5000, // Set a timeout limit (e.g., 5 seconds)
   headers: {
     "Content-Type": "application/json",
