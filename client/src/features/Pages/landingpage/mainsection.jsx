@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';  // Import useNavigate for navigation
 import { v4 as uuidv4 } from 'uuid';  // Import uuid for generating unique IDs
-import Footer from '../../components/footer/footer';
+import Footer from '../../../components/footer/footer';
 
 const MainSection = () => {
   const navigate = useNavigate();  // Use navigate for programmatic routing

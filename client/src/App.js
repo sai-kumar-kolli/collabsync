@@ -1,8 +1,8 @@
 import "./App.css";
 import Header from "./components/header/header";
-import EditorLanding from "./features/editorpage/editorLanding";
-import MainSection from "./features/landingpage/mainsection";
+import EditorLanding from "./features/Pages/editorpage/editorLanding";
 import { Route, Routes, useLocation } from "react-router-dom";
+import MainSection from "./features/Pages/landingpage/mainsection";
 
 function App() {
   const location = useLocation(); // Get the current route
