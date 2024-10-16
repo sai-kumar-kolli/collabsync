@@ -1,5 +1,5 @@
 
-```markdown
+
 # CollabSync
 
 **CollabSync** is a real-time collaborative code-sharing platform aimed at simplifying the way developers share, edit, and collaborate on code. This platform allows users to join sessions via shared URLs and collaboratively edit code in real time. Sessions are temporary, with automatic expiration and extension features built-in, providing users a seamless collaborative experience.
