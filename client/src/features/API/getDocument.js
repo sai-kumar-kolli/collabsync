@@ -6,7 +6,7 @@ export const getDocument = createAsyncThunk(
   async (payload, thunkapi) => {
     console.log(thunkapi.getState());
     try {
-      const response = await axiosInstance.get(`documents/${payload}`);
+      const response = await axiosInstance.get(window.location.origin + `/api/documents/${payload}`);
       const results = await response.data;
       console.log(results);
       return results;
