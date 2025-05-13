@@ -1,5 +1,4 @@
 
-
 # CollabSync
 
 **CollabSync** is a real-time collaborative code-sharing platform aimed at simplifying the way developers share, edit, and collaborate on code. This platform allows users to join sessions via shared URLs and collaboratively edit code in real time. Sessions are temporary, with automatic expiration and extension features built-in, providing users a seamless collaborative experience.
@@ -222,3 +221,13 @@ This project is licensed under the MIT License.
 - The **Future Roadmap** provides both short-term and long-term development goals, giving a clear direction for expanding the platform.
 - Optimization techniques cover backend and frontend practices to improve performance, scalability, and user experience.
 - Detailed API and WebSocket event descriptions, tailored for development and future expansions.
+
+```
+
+## Disclaimer
+
+This project is a personal initiative, created and maintained by me on my own time, separate from my professional work. It reflects my personal explorations and doesn’t represent the views or opinions of any employers.
+
+Some parts of this project were developed with help from publicly available AI tools for tasks like brainstorming, documentation, and code suggestions.
+
+The content here is entirely my own, and I’m sharing it without any guarantees – it’s just a reflection of my personal work.
